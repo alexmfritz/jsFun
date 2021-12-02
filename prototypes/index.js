@@ -241,21 +241,11 @@ const cakePrompts = {
   }
 };
 
-
-
-
-
-
 // ---------------------------------------------------------------------------
 // ---------------------------------------------------------------------------
 // ---------------------------------------------------------------------------
 // ---------------------------------------------------------------------------
 // ---------------------------------------------------------------------------
-
-
-
-
-
 
 // DATASET: classrooms from ./datasets/classrooms
 const classPrompts = {
@@ -268,7 +258,7 @@ const classPrompts = {
     //   { roomLetter: 'G', program: 'FE', capacity: 29 }
     // ]
 
-    const result = 'REPLACE WITH YOUR RESULT HERE';
+    const result = classrooms.filter(room => room.program === 'FE');
     return result;
 
     // Annotation:
@@ -282,8 +272,19 @@ const classPrompts = {
     //   feCapacity: 110,
     //   beCapacity: 96
     // }
+    let feTotal = 0;
+    let beTotal = 0;    
 
-    const result = 'REPLACE WITH YOUR RESULT HERE';
+    const result = classrooms.reduce((obj, room) => {
+        if (room.program === 'FE') {
+          feTotal += room.capacity;
+        } else {
+          beTotal += room.capacity;
+        }
+        obj = { feCapacity: feTotal , beCapacity: beTotal };
+        return obj;
+    }, {})
+    
     return result;
 
     // Annotation:
@@ -293,7 +294,9 @@ const classPrompts = {
   sortByCapacity() {
     // Return the array of classrooms sorted by their capacity (least capacity to greatest)
 
-    const result = 'REPLACE WITH YOUR RESULT HERE';
+    const result = classrooms.sort((a, b) => {
+      return a.capacity - b.capacity;
+    });
     return result;
 
     // Annotation:
