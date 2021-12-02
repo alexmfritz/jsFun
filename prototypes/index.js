@@ -77,17 +77,30 @@ const clubPrompts = {
     //   ...etc
     // }
 
-    const result = 'REPLACE WITH YOUR RESULT HERE';
+    const result = clubs.reduce((names, club) => {
+      club.members.forEach(member => {
+        if (!names.includes(member)) {
+          names.push(member);
+        }
+      });
+      return names;
+    }, []).reduce((obj, name) => {
+      let allClubs = [];
+      clubs.forEach(club => {
+        if (club.members.includes(name)) {
+          allClubs.push(club.club);
+        }
+      });
+      obj[name] = allClubs;
+      return obj;
+    }, {});
+
     return result;
 
     // Annotation:
     // Write your annotation here as a comment
   }
 };
-
-
-
-
 
 
 // ---------------------------------------------------------------------------
