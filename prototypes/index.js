@@ -24,24 +24,22 @@ const { dinosaurs, humans, movies } = require('./datasets/dinosaurs');
 // DATASET: kitties from ./datasets/kitties
 const kittyPrompts = {
   orangeKittyNames() {
-
     // Return an array of just the names of kitties who are orange e.g.
     // ['Tiger', 'Snickers']
-    const result = 'REPLACE WITH YOUR RESULT HERE';
+    const result = kitties.filter(cat => cat.color === 'orange').map(cat => cat.name);
     return result;
-
     // Annotation:
-    // Write your annotation here as a comment
+    // I filtered the original array to only show the two cats with the color orange, and then mapped that new array
+    // to only display the name properties
   },
 
   sortByAge() {
     // Sort the kitties by their age
-
-    const result = 'REPLACE WITH YOUR RESULT HERE';
+    const result = kitties.sort((a, b) => b.age - a.age);
     return result;
-
     // Annotation:
-    // Write your annotation here as a comment
+    // I sorted through the kitties array comparing a to b representing consecutive cats, then changing their order
+    // by their age with b (oldest) being the first and a (youngest) being the last
   },
 
   growUp() {
@@ -51,33 +49,22 @@ const kittyPrompts = {
     //   age: 4,
     //   color: 'grey'
     // },
-    // {
-    //   name: 'Tiger',
-    //   age: 7,
-    //   color: 'orange'
-    // },
     // ...etc]
-
-    const result = 'REPLACE WITH YOUR RESULT HERE';
+    let newAges = [];
+    kitties.forEach(cat => {
+      cat.age += 2;
+      newAges.push(cat);
+    });
+    const result = newAges;
     return result;
   }
 };
 
-
-
-
-
-
 // ---------------------------------------------------------------------------
 // ---------------------------------------------------------------------------
 // ---------------------------------------------------------------------------
 // ---------------------------------------------------------------------------
 // ---------------------------------------------------------------------------
-
-
-
-
-
 
 // DATASET: clubs from ./datasets/clubs
 const clubPrompts = {
