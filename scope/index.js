@@ -107,7 +107,12 @@ const scope = {
 
     // Log D: greeting
 
-    const result = 'REPLACE WITH YOUR RESULT HERE';
+    const result = [
+      { A: 'Yo' },
+      { B: 'Hey' },
+      { C: 'Hey' },
+      { D: 'Hello' }
+    ];
     return result;
 
     // Annotation:
