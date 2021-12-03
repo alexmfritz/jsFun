@@ -82,31 +82,21 @@ const scope = {
 
   exerciseC() {
     let greeting = 'Hello';
-
     function greetingFunction() {
       var greeting = 'Yo';
-
       if (greeting === 'Yo') {
         let greeting = 'Howdy';
       }
-
       // Log A: greeting
-
       function newPhrase() {
         greeting = 'Hey';
-
         // Log B: greeting
       }
-
       newPhrase();
-
       // Log C: greeting
     }
-
     greetingFunction();
-
     // Log D: greeting
-
     const result = [
       { A: 'Yo' },
       { B: 'Hey' },
@@ -114,38 +104,27 @@ const scope = {
       { D: 'Hello' }
     ];
     return result;
-
     // Annotation:
     // Write your annotation here as a comment
   },
 
   exerciseD() {
     let greeting = 'howdy';
-
     const greetingGenerator = () => {
       let greeting = 'hi';
-
       if (greeting === 'hi') {
         let greeting = 'hello';
       }
-
       // Log A: greeting
-
       const newGreeting = ()  => {
         greeting = 'welcome';
-
         // Log B: greeting
       };
-
       newGreeting();
-
       // Log C: greeting
     };
-
     greetingGenerator();
-
     // Log D: greeting
-
     const result = [
       { A: 'hi' },
       { B: 'welcome' },
@@ -153,39 +132,33 @@ const scope = {
       { D: 'howdy' }
     ];
     return result;
-
     // Annotation:
     // Write your annotation here as a comment
   },
 
   exerciseE() {
     let name = 'Brittany';
-
     function sayName() {
       let name = 'Pam';
-
       if (name === 'Pam') {
         name = 'Nathaniel';
-
         if (name.length > 0) {
           let name = 'Brittany';
         }
-
         // Log A: name
       }
-
       // Log B: name
     }
-
     // Log C: name
-
     sayName();
-
     // Log D: name
-
-    const result = 'REPLACE WITH YOUR RESULT HERE';
+    const result = [
+      { C: 'Brittany' },
+      { A: 'Nathaniel' },
+      { B: 'Nathaniel' },
+      { D: 'Brittany' }
+    ];
     return result;
-
     // Annotation:
     // Write your annotation here as a comment
   },
@@ -218,7 +191,13 @@ const scope = {
 
     // Log E: dog
 
-    const result = 'REPLACE WITH YOUR RESULT HERE';
+    const result = [
+      { A: 'Spot' },
+      { B: 'Spot' },
+      { C: 'Biscuit' },
+      { D: 'Biscuit' },
+      { E: 'Biscuit' }
+    ];
     return result;
 
     // Annotation:
