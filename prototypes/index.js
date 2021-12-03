@@ -276,15 +276,15 @@ const classPrompts = {
     let beTotal = 0;    
 
     const result = classrooms.reduce((obj, room) => {
-        if (room.program === 'FE') {
-          feTotal += room.capacity;
-        } else {
-          beTotal += room.capacity;
-        }
-        obj = { feCapacity: feTotal , beCapacity: beTotal };
-        return obj;
-    }, {})
-    
+      if (room.program === 'FE') {
+        feTotal += room.capacity;
+      } else {
+        beTotal += room.capacity;
+      }
+      obj = { feCapacity: feTotal , beCapacity: beTotal };
+      return obj;
+    }, {});
+  
     return result;
 
     // Annotation:
@@ -321,7 +321,6 @@ const bookPrompts = {
     //   'The Handmaid\'s Tale', 'The Metamorphosis', 'Brave New World', 'Life of Pi',
     //   'The Curious Incident of the Dog in the Night - Time', 'The Bell Jar',
     //   'Catch-22', 'Treasure Island']
-
 
     const result = 'REPLACE WITH YOUR RESULT HERE';
     return result;
@@ -360,10 +359,8 @@ const weatherPrompts = {
   getAverageTemps() {
     // return an array of all the average temperatures. Eg:
     // [ 40, 40, 44.5, 43.5, 57, 35, 65.5, 62, 14, 46.5 ]
-
-    const result = 'REPLACE WITH YOUR RESULT HERE';
+    const result = weather.map(item => ((item.temperature.high + item.temperature.low) / 2));
     return result;
-
     // Annotation:
     // Write your annotation here as a comment
   },
@@ -374,10 +371,10 @@ const weatherPrompts = {
     // [ 'Atlanta, Georgia is sunny.',
     // 'New Orleans, Louisiana is sunny.',
     // 'Raleigh, North Carolina is mostly sunny.' ]
-
-    const result = 'REPLACE WITH YOUR RESULT HERE';
+    const result = weather.filter(item => item.type === 'sunny' || item.type === 'mostly sunny').map(item => {
+      return `${item.location} is ${item.type}.`;
+    });
     return result;
-
     // Annotation:
     // Write your annotation here as a comment
   },
@@ -390,13 +387,12 @@ const weatherPrompts = {
     //   humidity: 84,
     //   temperature: { high: 49, low: 38 }
     // }
-
-    const result = 'REPLACE WITH YOUR RESULT HERE';
+    const result = weather.sort((a, b) => {
+      return a.humidity - b.humidity;
+    }).pop();
     return result;
-
     // Annotation:
     // Write your annotation here as a comment
-
   }
 };
 
