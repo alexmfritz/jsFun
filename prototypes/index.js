@@ -50,12 +50,10 @@ const kittyPrompts = {
     //   color: 'grey'
     // },
     // ...etc]
-    let newAges = [];
-    kitties.forEach(cat => {
+    const result = kitties.map(cat => {
       cat.age += 2;
-      newAges.push(cat);
+      return cat;
     });
-    const result = newAges;
     return result;
   }
 };
@@ -76,7 +74,6 @@ const clubPrompts = {
     //   Pam: ['Drama', 'Art', 'Chess'],
     //   ...etc
     // }
-
     const result = clubs.reduce((names, club) => {
       club.members.forEach(member => {
         if (!names.includes(member)) {
@@ -94,9 +91,7 @@ const clubPrompts = {
       obj[name] = allClubs;
       return obj;
     }, {});
-
     return result;
-
     // Annotation:
     // Write your annotation here as a comment
   }
@@ -223,7 +218,6 @@ const cakePrompts = {
     //    'berries': 2,
     //    ...etc
     // }
-
     const result = cakes.reduce((obj, topping) => {
       topping.toppings.forEach(value => {
         if (!obj[value]) {
@@ -235,7 +229,6 @@ const cakePrompts = {
       return obj;
     }, {});
     return result;
-
     // Annotation:
     // Write your annotation here as a comment
   }
@@ -274,7 +267,6 @@ const classPrompts = {
     // }
     let feTotal = 0;
     let beTotal = 0;    
-
     const result = classrooms.reduce((obj, room) => {
       if (room.program === 'FE') {
         feTotal += room.capacity;
@@ -284,21 +276,17 @@ const classPrompts = {
       obj = { feCapacity: feTotal , beCapacity: beTotal };
       return obj;
     }, {});
-  
     return result;
-
     // Annotation:
     // Write your annotation here as a comment
   },
 
   sortByCapacity() {
     // Return the array of classrooms sorted by their capacity (least capacity to greatest)
-
     const result = classrooms.sort((a, b) => {
       return a.capacity - b.capacity;
     });
     return result;
-
     // Annotation:
     // Write your annotation here as a comment
   }
@@ -321,8 +309,7 @@ const bookPrompts = {
     //   'The Handmaid\'s Tale', 'The Metamorphosis', 'Brave New World', 'Life of Pi',
     //   'The Curious Incident of the Dog in the Night - Time', 'The Bell Jar',
     //   'Catch-22', 'Treasure Island']
-
-    const result = 'REPLACE WITH YOUR RESULT HERE';
+    const result = books.filter(book => book.genre !== 'Horror').filter(book => book.genre !== 'True Crime').map(book => book.title);
     return result;
 
     // Annotation:
@@ -332,14 +319,16 @@ const bookPrompts = {
   getNewBooks() {
     // return an array of objects containing all books that were
     // published in the 90's and 00's. Inlucde the title and the year Eg:
-
     // [{ title: 'Harry Potter and the Sorcerer\'s Stone', year: 1997 },
     //  { title: 'Life of Pi', year: 2001 },
     //  { title: 'The Curious Incident of the Dog in the Night-Time', year: 2003 }]
-
-    const result = 'REPLACE WITH YOUR RESULT HERE';
+    const result = books.filter(item => item.published <= 2003).filter(item => item.published >= 1990).map(item => {
+      return {
+        title: item.title,
+        year: item.published
+      };  
+    });
     return result;
-
     // Annotation:
     // Write your annotation here as a comment
   }
@@ -402,7 +391,6 @@ const weatherPrompts = {
 // ---------------------------------------------------------------------------
 // ---------------------------------------------------------------------------
 
-
 // DATASET: nationalParks from ./datasets/nationalParks
 
 const nationalParksPrompts = {
@@ -462,17 +450,11 @@ const nationalParksPrompts = {
   }
 };
 
-
-
 // ---------------------------------------------------------------------------
 // ---------------------------------------------------------------------------
 // ---------------------------------------------------------------------------
 // ---------------------------------------------------------------------------
 // ---------------------------------------------------------------------------
-
-
-
-
 
 
 // DATASET: breweries from ./datasets/breweries
@@ -480,10 +462,12 @@ const breweryPrompts = {
   getBeerCount() {
     // Return the total beer count of all beers for every brewery e.g.
     // 40
-
-    const result = 'REPLACE WITH YOUR RESULT HERE';
+    const result = breweries.map(brewery => brewery.beers).reduce((sum, beer) => {
+      sum += beer.length;
+      return sum;
+    }, 0);
+    console.log(result);
     return result;
-
     // Annotation:
     // Write your annotation here as a comment
   },
@@ -496,10 +480,13 @@ const breweryPrompts = {
     //  { name: 'Ratio Beerworks', beerCount: 5},
     // ...etc.
     // ]
-
-    const result = 'REPLACE WITH YOUR RESULT HERE';
+    const result = breweries.map(brewery => {
+      return {
+        name: brewery.name,
+        beerCount: brewery.beers.length
+      };
+    });
     return result;
-
     // Annotation:
     // Write your annotation here as a comment
   },
@@ -516,11 +503,6 @@ const breweryPrompts = {
     // Write your annotation here as a comment
   }
 };
-
-
-
-
-
 
 // ---------------------------------------------------------------------------
 // ---------------------------------------------------------------------------
