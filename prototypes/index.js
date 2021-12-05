@@ -250,14 +250,11 @@ const classPrompts = {
     //   { roomLetter: 'E', program: 'FE', capacity: 22 },
     //   { roomLetter: 'G', program: 'FE', capacity: 29 }
     // ]
-
     const result = classrooms.filter(room => room.program === 'FE');
     return result;
-
     // Annotation:
     // Write your annotation here as a comment
   },
-
   totalCapacities() {
     // Create an object where the keys are 'feCapacity' and 'beCapacity',
     // and the values are the total capacity for all classrooms in each program e.g.
@@ -280,7 +277,6 @@ const classPrompts = {
     // Annotation:
     // Write your annotation here as a comment
   },
-
   sortByCapacity() {
     // Return the array of classrooms sorted by their capacity (least capacity to greatest)
     const result = classrooms.sort((a, b) => {
@@ -303,7 +299,6 @@ const classPrompts = {
 const bookPrompts = {
   removeViolence() {
     // return an array of all book titles that are not horror or true crime. Eg:
-
     //  ['1984', 'The Great Gatsby', 'Lord of the Flies', 'Harry Potter and the Sorcerer\'s Stone',
     //   'The Hitchhiker\'s Guide to the Galaxy', 'Flowers for Algernon', 'Slaughterhouse-Five',
     //   'The Handmaid\'s Tale', 'The Metamorphosis', 'Brave New World', 'Life of Pi',
@@ -311,10 +306,8 @@ const bookPrompts = {
     //   'Catch-22', 'Treasure Island']
     const result = books.filter(book => book.genre !== 'Horror').filter(book => book.genre !== 'True Crime').map(book => book.title);
     return result;
-
     // Annotation:
     // Write your annotation here as a comment
-
   },
   getNewBooks() {
     // return an array of objects containing all books that were
@@ -332,16 +325,13 @@ const bookPrompts = {
     // Annotation:
     // Write your annotation here as a comment
   }
-
 };
 
-
 // ---------------------------------------------------------------------------
 // ---------------------------------------------------------------------------
 // ---------------------------------------------------------------------------
 // ---------------------------------------------------------------------------
 // ---------------------------------------------------------------------------
-
 // DATASET: weather from './datasets/weather
 
 const weatherPrompts = {
@@ -353,7 +343,6 @@ const weatherPrompts = {
     // Annotation:
     // Write your annotation here as a comment
   },
-
   findSunnySpots() {
     // Return an array of sentences of the locations that are sunny
     // and mostly sunny. Include the location and weather type. Eg:
@@ -367,7 +356,6 @@ const weatherPrompts = {
     // Annotation:
     // Write your annotation here as a comment
   },
-
   findHighestHumidity() {
     // Return the location with the highest humidity. Eg:
     // {
@@ -401,10 +389,18 @@ const nationalParksPrompts = {
     //   parksToVisit: ["Yellowstone", "Glacier", "Everglades"],
     //   parksVisited: ["Rocky Mountain", "Acadia", "Zion"]
     //}
-
-    const result = 'REPLACE WITH YOUR RESULT HERE';
+    let toVisit = [];
+    let visited = [];
+    const result = nationalParks.reduce((obj, item) => {
+      if (item.visited === false) {
+        toVisit.push(item.name);
+      } else if (item.visited === true) {
+        visited.push(item.name);
+      }
+      obj = {parksToVisit: toVisit, parksVisited: visited};
+      return obj;
+    }, {});
     return result;
-
     // Annotation:
     // Write your annotation here as a comment
   },
@@ -417,11 +413,12 @@ const nationalParksPrompts = {
     // { Maine: 'Acadia' },
     // { Utah: 'Zion' },
     // { Florida: 'Everglades' } ]
-
-
-    const result = 'REPLACE WITH YOUR RESULT HERE';
+    const result = nationalParks.map(item => {
+      return {
+        [item.location]: item.name
+      };
+    });
     return result;
-
     // Annotation:
     // Write your annotation here as a comment
   },
@@ -441,10 +438,15 @@ const nationalParksPrompts = {
     //   'canyoneering',
     //   'backpacking',
     //   'rock climbing' ]
-
-    const result = 'REPLACE WITH YOUR RESULT HERE';
+    const result  = nationalParks.reduce((activities, activity) => {
+      activity.activities.forEach(activity => {
+        if (!activities.includes(activity)) {
+          activities.push(activity);
+        }
+      });
+      return activities;
+    }, []);
     return result;
-
     // Annotation:
     // Write your annotation here as a comment
   }
