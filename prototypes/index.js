@@ -13,44 +13,33 @@ const { constellations, stars } = require('./datasets/astronomy');
 const { weapons, characters } = require('./datasets/ultima');
 const { dinosaurs, humans, movies } = require('./datasets/dinosaurs');
 
-
-
-
-
-
 // SINGLE DATASETS
 // =================================================================
 
 // DATASET: kitties from ./datasets/kitties
 const kittyPrompts = {
   orangeKittyNames() {
-    // Return an array of just the names of kitties who are orange e.g.
-    // ['Tiger', 'Snickers']
-    const result = kitties.filter(cat => cat.color === 'orange').map(cat => cat.name);
-    return result;
-    // Annotation:
-    // I filtered the original array to only show the two cats with the color orange, and then mapped that new array
-    // to only display the name properties
-  },
+    // EASIER METHOD
 
+    const result = kitties.filter(cat => cat.color === 'orange').map(cat => cat.name); // filter by cat color property, mutate array to only show cat name property
+    return result;
+
+    // REDUCE METHOD
+
+    // const result = kitties.reduce((orangeArr, cat) => { // reduce to a single array (orangeArr), testing if cat color is orange and if it is, push the new array inside
+    //   if (cat.color === 'orange') {
+    //     orangeArr.push(cat.name);
+    //   }
+    //   return orangeArr;
+    // }, []);                              // original "sum" value of orangeArr is an empty array
+    // return result;
+  },
   sortByAge() {
-    // Sort the kitties by their age
-    const result = kitties.sort((a, b) => b.age - a.age);
+    const result = kitties.sort((a, b) => b.age - a.age); // sort the cats by their age, highest to lowest
     return result;
-    // Annotation:
-    // I sorted through the kitties array comparing a to b representing consecutive cats, then changing their order
-    // by their age with b (oldest) being the first and a (youngest) being the last
   },
-
   growUp() {
-    // Return an array of kitties who have all grown up by 2 years e.g.
-    // [{
-    //   name: 'Felicia',
-    //   age: 4,
-    //   color: 'grey'
-    // },
-    // ...etc]
-    const result = kitties.map(cat => {
+    const result = kitties.map(cat => { // mutate the same length array, only updating each age property by 2, returning the new object into the array
       cat.age += 2;
       return cat;
     });
@@ -67,33 +56,17 @@ const kittyPrompts = {
 // DATASET: clubs from ./datasets/clubs
 const clubPrompts = {
   membersBelongingToClubs() {
-    // Create an object whose keys are the names of people, and whose values are
-    // arrays that include the names of the clubs that person is a part of. e.g.
-    // {
-    //   Louisa: ['Drama', 'Art'],
-    //   Pam: ['Drama', 'Art', 'Chess'],
-    //   ...etc
-    // }
-    const result = clubs.reduce((names, club) => {
-      club.members.forEach(member => {
-        if (!names.includes(member)) {
-          names.push(member);
+    const result = clubs.reduce((obj, club) => { // reduce to a single object
+      club.members.forEach(member => { // forEach is iterating over each club members array
+        if (!obj[member]) { // if resulting object doesn't have a key of that specific member
+          obj[member] = [club.club]; // then declare a new key, using the current clubs name
+        } else { // otherwise, if the resulting object does have a key of that member
+          obj[member].push(club.club); //push the current club into that object member array
         }
       });
-      return names;
-    }, []).reduce((obj, name) => {
-      let allClubs = [];
-      clubs.forEach(club => {
-        if (club.members.includes(name)) {
-          allClubs.push(club.club);
-        }
-      });
-      obj[name] = allClubs;
-      return obj;
+      return obj; // return resulting object with a member as a key and their clubs as the value
     }, {});
     return result;
-    // Annotation:
-    // Write your annotation here as a comment
   }
 };
 
@@ -106,23 +79,13 @@ const clubPrompts = {
 // DATASET: mods from ./datasets/mods
 const modPrompts = {
   studentsPerMod() {
-    // Return an array of objects where the keys are mod (the number of the module)
-    // and studentsPerInstructor (how many students per instructor there are for that mod) e.g.
-    // [
-    //   { mod: 1, studentsPerInstructor: 9 },
-    //   { mod: 2, studentsPerInstructor: 11 },
-    //   { mod: 3, studentsPerInstructor: 10 },
-    //   { mod: 4, studentsPerInstructor: 8 }
-    // ]
-    const result = mods.map(item => {
+    const result = mods.map(newMod => {
       return {
-        mod: item.mod,
-        studentsPerInstructor: item.students/item.instructors
+        mod: newMod.mod,
+        studentsPerInstructor: newMod.students/newMod.instructors
       };
     });
     return result;
-    // Annotation:
-    // Write your annotation here as a comment
   }
 };
 
@@ -135,13 +98,6 @@ const modPrompts = {
 // DATASET: cakes from ./datasets/cakes
 const cakePrompts = {
   stockPerCake() {
-    // Return an array of objects that include just the flavor of the cake and how
-    // much of that cake is in stock e.g.
-    // [
-    //    { flavor: 'dark chocolate', inStock: 15 },
-    //    { flavor: 'yellow', inStock: 14 },
-    //    ..etc
-    // ]
     const result = cakes.map(cake => {
       return {
         flavor: cake.cakeFlavor,
@@ -149,53 +105,20 @@ const cakePrompts = {
       };
     });
     return result;
-    // Annotation:
-    // Write your annotation here as a comment
   },
-
   onlyInStock() {
-    // Return an array of only the cakes that are in stock
-    // e.g.
-    // [
-    //   {
-    //   cakeFlavor: 'dark chocolate',
-    //   filling: null,
-    //   frosting: 'dark chocolate ganache',
-    //   toppings: ['dutch process cocoa', 'toasted sugar', 'smoked sea salt'],
-    //   inStock: 15
-    // },
-    // {
-    //   cakeFlavor: 'yellow',
-    //   filling: 'citrus glaze',
-    //   frosting: 'chantilly cream',
-    //   toppings: ['berries', 'edible flowers'],
-    //   inStock: 14
-    // },
-    // ..etc
-    // ]
     const result = cakes.filter(cake => cake.inStock > 0);
     return result;
-    // Annotation:
-    // Write your annotation here as a comment
   },
-
   totalInventory() {
-    // Return the total amount of cakes in stock e.g.
-    // 59
-    const result = cakes.map(cake => cake.inStock).reduce((sum, num) => {
-      return sum += num;
+    const result = cakes.reduce((sum, cake) => {
+      return sum += cake.inStock;
     }, 0);
     return result;
-    // Annotation:
-    // Write your annotation here as a comment
   },
-
   allToppings() {
-    // Return an array of all unique toppings (no duplicates) needed to bake
-    // every cake in the dataset e.g.
-    // ['dutch process cocoa', 'toasted sugar', 'smoked sea salt', 'berries', ..etc]
-    const result  = cakes.reduce((toppings, topping) => {
-      topping.toppings.forEach(topping => {
+    const result  = cakes.reduce((toppings, cake) => {
+      cake.toppings.forEach(topping => {
         if (!toppings.includes(topping)) {
           toppings.push(topping);
         }
@@ -203,21 +126,8 @@ const cakePrompts = {
       return toppings;
     }, []);
     return result;
-
-    // Annotation:
-    // Write your annotation here as a comment
   },
-
   groceryList() {
-    // I need to make a grocery list. Please give me an object where the keys are
-    // each topping, and the values are the amount of that topping I need to buy e.g.
-    // {
-    //    'dutch process cocoa': 1,
-    //    'toasted sugar': 3,
-    //    'smoked sea salt': 3,
-    //    'berries': 2,
-    //    ...etc
-    // }
     const result = cakes.reduce((obj, topping) => {
       topping.toppings.forEach(value => {
         if (!obj[value]) {
@@ -422,7 +332,6 @@ const nationalParksPrompts = {
     // Annotation:
     // Write your annotation here as a comment
   },
-
   getParkActivities() {
     // Return an array of all the activities I can do
     // in a National Park. Make sure to exclude duplicates. eg:
@@ -468,12 +377,10 @@ const breweryPrompts = {
       sum += beer.length;
       return sum;
     }, 0);
-    console.log(result);
     return result;
     // Annotation:
     // Write your annotation here as a comment
   },
-
   getBreweryBeerCount() {
     // Return an array of objects where each object has the name of a brewery
     // and the count of the beers that brewery has e.g.
@@ -492,15 +399,17 @@ const breweryPrompts = {
     // Annotation:
     // Write your annotation here as a comment
   },
-
   findHighestAbvBeer() {
     // Return the beer which has the highest ABV of all beers
     // e.g.
-    // { name: 'Barrel Aged Nature\'s Sweater', type: 'Barley Wine', abv: 10.9, ibu: 40 }
-
-    const result = 'REPLACE WITH YOUR RESULT HERE';
+    // { name: 'Barrel Aged Nature\'s Sweater', type: 'Barley Wine', abv: 10.9, ibu: 40 };
+    const result = breweries.reduce((newBeers, brewery) => {
+      brewery.beers.forEach(beer => {
+        newBeers.push(beer);
+      });
+      return newBeers;
+    }, []).sort((a, b) => a.abv - b.abv).pop();
     return result;
-
     // Annotation:
     // Write your annotation here as a comment
   }
@@ -511,22 +420,6 @@ const breweryPrompts = {
 // ---------------------------------------------------------------------------
 // ---------------------------------------------------------------------------
 // ---------------------------------------------------------------------------
-
-
-
-
-
-
-// ---------------------------------------------------------------------------
-// ---------------------------------------------------------------------------
-// ---------------------------------------------------------------------------
-// ---------------------------------------------------------------------------
-// ---------------------------------------------------------------------------
-
-
-
-
-
 
 // DOUBLE DATASETS
 // =================================================================
